@@ -7,36 +7,23 @@ const LogViewer: React.FC = () => {
   const logContainerRef = useRef<HTMLDivElement | null>(null)
   const { logLines, loading, error } = useStreamLogfile({ url: logFileUrl })
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setLogFileUrl('https://s3.amazonaws.com/io.cribl.c021.takehome/cribl.log')
+  }
+
   return (
     <div className="log-viewer">
-      <div className="controls">
-        <button
-          onClick={() =>
-            setLogFileUrl(
-              'https://s3.amazonaws.com/io.cribl.c021.takehome/cribl.log'
-            )
-          }
-          disabled={loading}
-        >
-          Download Log
+      <form className="log-viewer-form" onSubmit={handleSubmit}>
+        <input placeholder="https://s3.amazonaws.com/path/to/your/logfile" />{' '}
+        <button type="submit" disabled={loading}>
+          Submit
         </button>
-      </div>
+      </form>
 
       {error && <div className="error">{error}</div>}
 
-      <div
-        className="log-container"
-        ref={logContainerRef}
-        style={{
-          height: '500px',
-          overflowY: 'auto',
-          border: '1px solid #ccc',
-          padding: '8px',
-          fontFamily: 'monospace',
-          whiteSpace: 'pre-wrap'
-          // backgroundColor: '#f5f5f5'
-        }}
-      >
+      <div className="log-container" ref={logContainerRef}>
         {logLines.map((line, index) => (
           <div key={index} className="log-line">
             {line}
@@ -52,8 +39,12 @@ const LogViewer: React.FC = () => {
 const App: React.FC = () => {
   return (
     <div className="app">
-      <h1>Log File Viewer</h1>
-      <LogViewer />
+      <header>
+        <h1>Log Reader</h1>
+      </header>
+      <main>
+        <LogViewer />
+      </main>
     </div>
   )
 }
