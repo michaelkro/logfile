@@ -1,34 +1,60 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState, useRef } from 'react'
 
-function App() {
-  const [count, setCount] = useState(0)
+import { useStreamLogfile } from './hooks/use-stream-logfile'
+
+const LogViewer: React.FC = () => {
+  const [logFileUrl, setLogFileUrl] = useState<string>('')
+  const logContainerRef = useRef<HTMLDivElement | null>(null)
+  const { logLines, loading, error } = useStreamLogfile({ url: logFileUrl })
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+    <div className="log-viewer">
+      <div className="controls">
+        <button
+          onClick={() =>
+            setLogFileUrl(
+              'https://s3.amazonaws.com/io.cribl.c021.takehome/cribl.log'
+            )
+          }
+          disabled={loading}
+        >
+          Download Log
         </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+
+      {error && <div className="error">{error}</div>}
+
+      <div
+        className="log-container"
+        ref={logContainerRef}
+        style={{
+          height: '500px',
+          overflowY: 'auto',
+          border: '1px solid #ccc',
+          padding: '8px',
+          fontFamily: 'monospace',
+          whiteSpace: 'pre-wrap'
+          // backgroundColor: '#f5f5f5'
+        }}
+      >
+        {logLines.map((line, index) => (
+          <div key={index} className="log-line">
+            {line}
+          </div>
+        ))}
+        {loading && <div className="loading">Loading...</div>}
+      </div>
+    </div>
+  )
+}
+
+// Example usage
+const App: React.FC = () => {
+  return (
+    <div className="app">
+      <h1>Log File Viewer</h1>
+      <LogViewer />
+    </div>
   )
 }
 
