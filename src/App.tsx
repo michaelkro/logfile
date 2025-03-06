@@ -6,6 +6,16 @@ function App() {
   const [url, setUrl] = useState<string>('')
   const { downloadLog, logLines, error } = useStreamLogfile()
 
+  const parseLogLine = (line: string) => {
+    try {
+      const parsedLine = JSON.parse(line)
+      const timestamp = new Date(parsedLine._time).toISOString()
+      return { timestamp, json: JSON.stringify(parsedLine) }
+    } catch (e) {
+      return { timestamp: 'Invalid timestamp', json: line }
+    }
+  }
+
   return (
     <>
       <header>Log Viewer</header>
@@ -20,11 +30,27 @@ function App() {
           <button type="submit">Submit</button>
         </form>
         {error}
-        <ul className="log-viewer-list">
-          {logLines.map((line, index) => (
-            <li key={index}>{line}</li>
-          ))}
-        </ul>
+        <div className="log-table-container">
+          <table className="log-table">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Event</th>
+              </tr>
+            </thead>
+            <tbody>
+              {logLines.map((line, index) => {
+                const { timestamp, json } = parseLogLine(line)
+                return (
+                  <tr key={index}>
+                    <td className="timestamp-cell">{timestamp}</td>
+                    <td className="json-cell">{json}</td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
       </main>
     </>
   )

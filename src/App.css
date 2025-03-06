@@ -9,11 +9,34 @@ main {
   height: 100%;
 }
 
-.log-viewer-list {
+.log-table-container {
+  flex: 1;
+  overflow: auto;
+  border: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+}
+
+.log-table {
   overflow-y: scroll;
   height: 100%;
   list-style-type: none;
   margin: 0;
   padding: 0;
   position: relative;
+}
+
+.log-table th:first-child {
+  width: 180px;
+}
+
+.timestamp-cell {
+  font-family: monospace;
+  white-space: nowrap;
+}
+
+.json-cell {
+  font-family: monospace;
+  white-space: nowrap;
+  max-width: 0;
 }
