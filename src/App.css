@@ -40,3 +40,14 @@ main {
   white-space: nowrap;
   max-width: 0;
 }
+
+.overflow-y-scroll {
+  overflow-y: scroll;
+}
+
+.log-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: white;
+}
