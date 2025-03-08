@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 import { useStreamLogFile } from '../../hooks/use-stream-log-file.tsx'
 import { LoadingSpinner } from '../LoadingSpinner/LoadingSpinner.tsx'
+import { ExpandableRow } from '../ExpandableRow/ExpandableRow.tsx'
+
+import { type LogEntry } from '../../types.ts'
 
 import LogfileIcon from '../../../public/logfile.svg'
 
@@ -10,12 +13,6 @@ import './Logfile.css'
 interface LogData {
   [key: string]: string
   _time: string
-}
-
-interface LogEntry {
-  timestamp?: string
-  raw: string
-  error?: string
 }
 
 export function Logfile() {
@@ -85,16 +82,7 @@ export function Logfile() {
             </div>
             <div className="logfile-table__body">
               {logs.map((log, index) => {
-                return (
-                  <div className="logfile-table__row" key={index}>
-                    <div className="logfile-table__row__time-cell">
-                      {log.timestamp}
-                    </div>
-                    <div className="logfile-table__row__event-cell">
-                      {log.raw}
-                    </div>
-                  </div>
-                )
+                return <ExpandableRow log={log} index={index} />
               })}
             </div>
           </div>

@@ -102,17 +102,3 @@ main {
   border-bottom-right-radius: var(--border-radius);
   border-bottom-left-radius: var(--border-radius);
 }
-
-.logfile-table__row {
-  display: flex;
-  border-bottom: 1px solid #ddd;
-  font-family: monospace;
-}
-
-.logfile-table__row__time-cell, .logfile-table__row__event-cell {
-  padding: var(--spacing-xs) var(--spacing-sm);
-}
-
-.logfile-table__row__time-cell {
-  min-width: 225px;
-}

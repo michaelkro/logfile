@@ -1,0 +1,26 @@
+.logfile-table__row {
+  display: flex;
+  border-bottom: 1px solid #ddd;
+  font-family: monospace;
+  cursor: default;
+}
+
+.logfile-table__row.expanded {
+  flex-direction: column;
+}
+
+.logfile-table__row__time-cell, .logfile-table__row__event-cell {
+  padding: var(--spacing-xs) var(--spacing-sm);
+}
+
+.logfile-table__row__time-cell {
+  min-width: 225px;
+}
+
+.logfile-table__row__time-cell.expanded {
+  background-color: #d8e1e6;
+}
+
+.logfile-table__row__formatted-json {
+  margin: 0 var(--spacing-sm);
+}
