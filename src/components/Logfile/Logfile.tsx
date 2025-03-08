@@ -20,6 +20,7 @@ export function Logfile() {
     'https://s3.amazonaws.com/io.cribl.c021.takehome/cribl.log'
   )
   const [logs, setLogs] = useState<LogEntry[]>([])
+  const [scrollTop, setScrollTop] = useState(0)
   const { streamLogfile, logLines, error, loading, clearError } =
     useStreamLogFile({ maxFileSize: 3000000 })
 
@@ -82,7 +83,10 @@ export function Logfile() {
               <div className="logfile-table__header__time-cell">Time</div>
               <div className="logfile-table__header__event-cell">Event</div>
             </div>
-            <div className="logfile-table__body">
+            <div
+              className="logfile-table__body"
+              onScroll={(e) => setScrollTop(e.currentTarget.scrollTop)}
+            >
               {logs.map((log, index) => {
                 return <ExpandableRow log={log} index={index} />
               })}
