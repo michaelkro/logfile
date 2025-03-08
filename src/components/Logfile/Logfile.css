@@ -3,17 +3,107 @@
   height: 100vh;
 }
 
+.logfile-header {
+  display: flex;
+  align-items: center;
+}
+
+.logfile-header__brand {
+  margin-right: var(--spacing-xs);
+}
+
 main {
   display: flex;
   flex-direction: column;
   height: 100%;
 }
 
-.log-viewer-list {
+.logfile-url-form {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: var(--spacing-lg);
+}
+
+.logfile-url-form__input {
+  display: flex;
+  width: 100%;
+}
+
+.logfile-url-form__input input {
+  flex: auto;
+  border: 1px solid #ddd;
+  border-radius: var(--border-radius);
+  margin-right: var(--spacing-sm);
+  padding: 0 var(--spacing-xs);
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  line-height: 2;
+  font-size: 1rem;
+}
+
+.logfile-url-form__input button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: var(--border-radius);
+  width: 90px;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background-color: #0fb9b8;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.logfile-url-form__input__error {
+  padding: 0 var(--spacing-xs);
+  color: red;
+  font-size: 0.9rem;
+}
+
+.logfile-table {
+  /* header - input - input margin - table header - root padding */
+  height: calc(100vh - 90px - 55px - 55px - 40px - 30px);
+}
+
+.logfile-table__header {
+  display: flex;
+  background-color: #f0f0f0;
+  font-weight: bold;
+  border-top-left-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius);
+}
+
+.logfile-table__header > div {
+  padding: var(--spacing-xs) var(--spacing-sm)
+}
+
+.logfile-table__header__time-cell {
+  width: 225px;
+}
+
+.logfile-table__body {
   overflow-y: scroll;
   height: 100%;
-  list-style-type: none;
   margin: 0;
   padding: 0;
-  position: relative;
+  border: 1px solid #ddd;
+  white-space: nowrap;
+  border-bottom-right-radius: var(--border-radius);
+  border-bottom-left-radius: var(--border-radius);
+}
+
+.logfile-table__row {
+  display: flex;
+  border-bottom: 1px solid #ddd;
+  font-family: monospace;
+}
+
+.logfile-table__row__time-cell, .logfile-table__row__event-cell {
+  padding: var(--spacing-xs) var(--spacing-sm);
+}
+
+.logfile-table__row__time-cell {
+  min-width: 225px;
 }
