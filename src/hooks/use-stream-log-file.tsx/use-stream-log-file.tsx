@@ -65,7 +65,7 @@ export const useStreamLogFile = (options?: UseStreamLogFileOptions) => {
               fileSize: totalSizeRef.current.toString()
             })
             setError(
-              `File size ${totalSizeRef.current} is greater than the allowed maximum of ${maxFileSize}`
+              `The file size is greater than the allowed maximum of ${maxFileSize}. The full log file cannot be displayed.`
             )
             setLoading(false)
             break
