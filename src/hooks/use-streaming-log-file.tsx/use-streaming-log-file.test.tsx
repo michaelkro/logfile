@@ -16,4 +16,9 @@ describe('streamLogFile', () => {
       'Failed to fetch log file: Must provide a valid web URL'
     )
   })
+
+  test.todo('sets error if response is not ok')
+  test.todo('sets error if body is null')
+  test.todo('sets error if fetch fails')
+  test.todo('handles chunks with incomplete lines')
 })
