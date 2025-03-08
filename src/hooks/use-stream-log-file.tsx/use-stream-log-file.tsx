@@ -2,7 +2,7 @@ import { useCallback, useRef, useState } from 'react'
 
 import { NEWLINE_REGEX, URL_REGEX } from './constants'
 
-export const useStreamingLogfile = () => {
+export const useStreamLogFile = () => {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [logLines, setLoglines] = useState<string[]>([])

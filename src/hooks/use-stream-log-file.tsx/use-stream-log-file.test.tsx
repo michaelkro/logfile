@@ -1,13 +1,13 @@
 import { renderHook, act } from '@testing-library/react'
 
-import { useStreamingLogfile } from './use-streaming-log-file'
+import { useStreamLogFile } from './use-stream-log-file'
 
 describe('streamLogFile', () => {
   test.each([
     { url: '', displayName: 'empty string' },
     { url: 'foo', displayName: 'foo' }
   ])(`sets error for invalid URL: $displayName`, async ({ url }) => {
-    const { result } = renderHook(() => useStreamingLogfile())
+    const { result } = renderHook(() => useStreamLogFile())
 
     await act(async () => {
       result.current.streamLogfile(url)
