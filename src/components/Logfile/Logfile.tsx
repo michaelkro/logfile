@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 import { useStreamLogFile } from '../../hooks/use-stream-log-file.tsx'
+import { LoadingSpinner } from '../LoadingSpinner/LoadingSpinner.tsx'
 
 import LogfileIcon from '../../../public/logfile.svg'
 
@@ -20,7 +21,14 @@ interface LogEntry {
 export function Logfile() {
   const [url, setUrl] = useState<string>('')
   const [logs, setLogs] = useState<LogEntry[]>([])
-  const { streamLogfile, logLines, error } = useStreamLogFile()
+  const { streamLogfile, logLines, error, loading, clearError } =
+    useStreamLogFile()
+
+  useEffect(() => {
+    if (!url) {
+      clearError()
+    }
+  }, [url, clearError])
 
   useEffect(() => {
     if (logLines && logLines.length > 0) {
@@ -61,7 +69,9 @@ export function Logfile() {
               value={url}
               onChange={(e) => setUrl(e.target.value)}
             />
-            <button type="submit">Submit</button>
+            <button disabled={!url || loading} type="submit">
+              {loading ? <LoadingSpinner /> : 'Submit'}
+            </button>
           </div>
           {error && (
             <span className="logfile-url-form__input__error">{error}</span>

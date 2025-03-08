@@ -16,6 +16,10 @@ export const useStreamLogFile = (options?: UseStreamLogFileOptions) => {
   const totalSizeRef = useRef<number>(0)
   const maxFileSize = options?.maxFileSize || MAX_FILE_SIZE
 
+  const clearError = useCallback(() => {
+    setError('')
+  }, [])
+
   const streamLogfile = useCallback(
     async (url: string) => {
       try {
@@ -96,6 +100,7 @@ export const useStreamLogFile = (options?: UseStreamLogFileOptions) => {
   )
 
   return {
+    clearError,
     error,
     loading,
     logLines,
