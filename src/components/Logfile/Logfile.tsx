@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 import { useStreamLogFile } from '../../hooks/use-stream-log-file.tsx'
 import { LoadingSpinner } from '../LoadingSpinner/LoadingSpinner.tsx'
+import { ExpandableRow } from '../ExpandableRow/ExpandableRow.tsx'
+
+import { type LogEntry } from '../../types.ts'
 
 import LogfileIcon from '../../../public/logfile.svg'
 
@@ -12,17 +15,13 @@ interface LogData {
   _time: string
 }
 
-interface LogEntry {
-  timestamp?: string
-  raw: string
-  error?: string
-}
-
 export function Logfile() {
-  const [url, setUrl] = useState<string>('')
+  const [url, setUrl] = useState<string>(
+    'https://s3.amazonaws.com/io.cribl.c021.takehome/cribl.log'
+  )
   const [logs, setLogs] = useState<LogEntry[]>([])
   const { streamLogfile, logLines, error, loading, clearError } =
-    useStreamLogFile()
+    useStreamLogFile({ maxFileSize: 3000000 })
 
   useEffect(() => {
     if (!url) {
@@ -85,16 +84,7 @@ export function Logfile() {
             </div>
             <div className="logfile-table__body">
               {logs.map((log, index) => {
-                return (
-                  <div className="logfile-table__row" key={index}>
-                    <div className="logfile-table__row__time-cell">
-                      {log.timestamp}
-                    </div>
-                    <div className="logfile-table__row__event-cell">
-                      {log.raw}
-                    </div>
-                  </div>
-                )
+                return <ExpandableRow log={log} index={index} />
               })}
             </div>
           </div>
