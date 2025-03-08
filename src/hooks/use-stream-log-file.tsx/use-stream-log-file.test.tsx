@@ -21,4 +21,5 @@ describe('streamLogFile', () => {
   test.todo('sets error if body is null')
   test.todo('sets error if fetch fails')
   test.todo('handles chunks with incomplete lines')
+  test.todo('stops processing if max size is reached')
 })
