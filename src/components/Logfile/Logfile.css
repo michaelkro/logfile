@@ -1,3 +1,19 @@
 #root {
   padding: 2rem;
+  height: 100vh;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.log-viewer-list {
+  overflow-y: scroll;
+  height: 100%;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
 }

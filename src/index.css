@@ -3,3 +3,14 @@
   line-height: 1.5;
   font-weight: 400;
 }
+
+body {
+  margin: 0;
+  padding: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+*, *:after, *:before {
+  box-sizing: border-box;
+}
