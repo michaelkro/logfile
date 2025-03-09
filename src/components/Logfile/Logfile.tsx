@@ -21,7 +21,7 @@ export function Logfile() {
   )
   const [logs, setLogs] = useState<LogEntry[]>([])
   const { streamLogfile, logLines, error, loading, clearError } =
-    useStreamLogFile({ maxFileSize: 3000000 })
+    useStreamLogFile()
 
   useEffect(() => {
     if (!url) {
