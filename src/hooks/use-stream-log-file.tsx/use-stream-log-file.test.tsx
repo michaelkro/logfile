@@ -10,7 +10,7 @@ describe('streamLogFile', () => {
     const { result } = renderHook(() => useStreamLogFile())
 
     await act(async () => {
-      result.current.streamLogfile(url)
+      result.current.streamLogFile(url)
     })
     expect(result.current.error).toBe(
       'Failed to fetch log file: Must provide a valid web URL'

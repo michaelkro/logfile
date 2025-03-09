@@ -20,7 +20,7 @@ export const useStreamLogFile = (options?: UseStreamLogFileOptions) => {
     setError('')
   }, [])
 
-  const streamLogfile = useCallback(
+  const streamLogFile = useCallback(
     async (url: string) => {
       try {
         if (!url || !URL_REGEX.test(url)) {
@@ -104,6 +104,6 @@ export const useStreamLogFile = (options?: UseStreamLogFileOptions) => {
     error,
     loading,
     logLines,
-    streamLogfile
+    streamLogFile
   } as const
 }

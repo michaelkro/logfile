@@ -18,7 +18,7 @@ interface LogData {
 export function Logfile() {
   const [url, setUrl] = useState<string>('')
   const [logs, setLogs] = useState<LogEntry[]>([])
-  const { streamLogfile, logLines, error, loading, clearError } =
+  const { streamLogFile, logLines, error, loading, clearError } =
     useStreamLogFile()
 
   useEffect(() => {
@@ -61,7 +61,7 @@ export function Logfile() {
           className="logfile-url-form"
           onSubmit={(e) => {
             e.preventDefault()
-            streamLogfile(url)
+            streamLogFile(url)
           }}
         >
           <div className="logfile-url-form__input">
