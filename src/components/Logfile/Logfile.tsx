@@ -78,7 +78,7 @@ export function Logfile() {
             <span className="logfile-url-form__input__error">{error}</span>
           )}
         </form>
-        <VirtualizedTable logs={logs} />
+        <VirtualizedTable logs={logs} loading={loading} />
       </main>
     </>
   )

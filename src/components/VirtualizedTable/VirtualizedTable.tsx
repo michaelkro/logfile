@@ -15,14 +15,25 @@ import {
 
 export interface VirtualizedTableProps {
   logs: LogEntry[]
+  loading: boolean
 }
 
-export const VirtualizedTable: FC<VirtualizedTableProps> = ({ logs }) => {
+export const VirtualizedTable: FC<VirtualizedTableProps> = ({
+  logs,
+  loading
+}) => {
   const [scrollTop, setScrollTop] = useState(0)
   const [tableBodyHeight, setTableBodyHeight] = useState(0)
   const [expandedRows, setExpandedRows] = useState<ExpandedRowsMap>({})
   const [rowHeights, setRowHeights] = useState<RowHeightsMap>({})
   const tableBodyRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (loading) {
+      setExpandedRows({})
+      setRowHeights({})
+    }
+  }, [loading])
 
   useEffect(() => {
     const tableBodyRefValue = tableBodyRef.current
