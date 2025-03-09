@@ -7,5 +7,6 @@ export default {
   transform: {
     '^.+\\.tsx?$': 'ts-jest'
   },
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts']
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
+  clearMocks: true
 }
