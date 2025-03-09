@@ -4,6 +4,8 @@ import { LogEntry } from '../../types'
 
 import { ExpandableRow } from '../ExpandableRow/ExpandableRow'
 
+import { ExpandedRowsMap, RowHeightsMap, VirtualizedLogTableRow } from './types'
+
 import './VirtualizedTable.css'
 import {
   COLLAPSED_ROW_HEIGHT,
@@ -11,19 +13,15 @@ import {
   TABLE_MAX_WIDTH
 } from './constants'
 
-interface VirtualizedLogTableRow {
-  log: LogEntry
-  top: number
-  height: number
-}
-
-interface VirtualizedTableProps {
+export interface VirtualizedTableProps {
   logs: LogEntry[]
 }
 
 export const VirtualizedTable: FC<VirtualizedTableProps> = ({ logs }) => {
   const [scrollTop, setScrollTop] = useState(0)
   const [tableBodyHeight, setTableBodyHeight] = useState(0)
+  const [expandedRows, setExpandedRows] = useState<ExpandedRowsMap>({})
+  const [rowHeights, setRowHeights] = useState<RowHeightsMap>({})
   const tableBodyRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -48,20 +46,67 @@ export const VirtualizedTable: FC<VirtualizedTableProps> = ({ logs }) => {
     }
   }, [logs])
 
-  const getRowHeight = useCallback((): number => {
-    return COLLAPSED_ROW_HEIGHT
+  const toggleExpand = useCallback((id: number) => {
+    setExpandedRows((prevExpandedRows) => {
+      const newExpandedRows = {
+        ...prevExpandedRows,
+        [id]: !prevExpandedRows[id]
+      }
+
+      // If collapsing, remove the height
+      if (!newExpandedRows[id]) {
+        setRowHeights((prevHeights) => {
+          const newHeights = { ...prevHeights }
+          delete newHeights[id]
+          return newHeights
+        })
+      }
+
+      return newExpandedRows
+    })
   }, [])
 
+  const updateRowHeight = useCallback((id: number, height: number) => {
+    setRowHeights((prev) => {
+      if (prev[id] !== height) {
+        return { ...prev, [id]: height }
+      }
+      return prev
+    })
+  }, [])
+
+  const setHeightFromRef = useCallback(
+    (id: number, element: HTMLDivElement | null) => {
+      if (element && expandedRows[id]) {
+        updateRowHeight(id, element.scrollHeight)
+      }
+    },
+    [expandedRows, updateRowHeight]
+  )
+
+  const getRowHeight = useCallback(
+    (id: number): number => {
+      return expandedRows[id]
+        ? // Fall back to an arbitrary constant when
+          // the row height isn't ready
+          rowHeights[id] || COLLAPSED_ROW_HEIGHT * 2
+        : COLLAPSED_ROW_HEIGHT
+    },
+    [expandedRows, rowHeights]
+  )
+
   const getTotalHeight = useCallback((): number => {
-    return COLLAPSED_ROW_HEIGHT * logs.length
-  }, [logs])
+    return logs.reduce((height, log) => {
+      return height + getRowHeight(log.id)
+    }, 0)
+  }, [logs, getRowHeight])
 
   const getVirtualizedTableRows = useCallback((): VirtualizedLogTableRow[] => {
     const virtualizedTableRows: VirtualizedLogTableRow[] = []
     let currentTop = 0
 
     logs.forEach((log) => {
-      const rowHeight = getRowHeight()
+      const rowHeight = getRowHeight(log.id)
       const rowBottom = currentTop + rowHeight
 
       if (
@@ -101,7 +146,17 @@ export const VirtualizedTable: FC<VirtualizedTableProps> = ({ logs }) => {
             }}
           >
             {getVirtualizedTableRows().map(({ log, top, height }) => {
-              return <ExpandableRow log={log} top={top} height={height} />
+              return (
+                <ExpandableRow
+                  log={log}
+                  top={top}
+                  height={height}
+                  expanded={expandedRows[log.id]}
+                  toggleExpand={toggleExpand}
+                  setHeightFromRef={setHeightFromRef}
+                  key={log.id}
+                />
+              )
             })}
           </div>
         </div>

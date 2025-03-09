@@ -30,5 +30,5 @@
 }
 
 .logfile-table__row__formatted-json {
-  margin: 0 var(--spacing-sm);
+  margin: var(--spacing-sm);
 }
