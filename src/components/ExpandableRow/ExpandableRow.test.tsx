@@ -1,3 +1,2 @@
-test.todo('collapsed row expands when clicked')
-test.todo('expanded ro collapses when clicked')
-test.todo('raw json is formatted in expanded row')
+test.todo('calls setHeightFromRef when expanded')
+test.todo('calls toggleExpand with correct arguments on click')

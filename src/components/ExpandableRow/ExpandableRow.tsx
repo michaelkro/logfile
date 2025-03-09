@@ -8,6 +8,7 @@ interface ExpandableRowProps {
   height: number
   expanded: boolean
   toggleExpand: (id: number) => void
+  setHeightFromRef: (id: number, element: HTMLDivElement | null) => void
 }
 
 export const ExpandableRow: React.FC<ExpandableRowProps> = ({
@@ -15,7 +16,8 @@ export const ExpandableRow: React.FC<ExpandableRowProps> = ({
   top,
   height,
   expanded,
-  toggleExpand
+  toggleExpand,
+  setHeightFromRef
 }) => {
   return (
     <div
@@ -27,14 +29,14 @@ export const ExpandableRow: React.FC<ExpandableRowProps> = ({
       onClick={() => toggleExpand(log.id)}
     >
       {expanded ? (
-        <>
+        <div ref={(el) => setHeightFromRef(log.id, el)}>
           <div className="logfile-table__row__time-cell expanded">
             {log.timestamp}
           </div>
           <pre className="logfile-table__row__formatted-json">
             {JSON.stringify(JSON.parse(log.raw), null, 2)}
           </pre>
-        </>
+        </div>
       ) : (
         <>
           {' '}
