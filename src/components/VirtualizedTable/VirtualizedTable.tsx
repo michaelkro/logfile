@@ -89,9 +89,11 @@ export const VirtualizedTable: FC<VirtualizedTableProps> = ({ logs }) => {
           onScroll={(e) => setScrollTop(e.currentTarget.scrollTop)}
           ref={tableBodyRef}
         >
-          {logs.map((log, index) => {
-            return <ExpandableRow log={log} index={index} />
-          })}
+          <div style={{ height: getTotalHeight(), position: 'relative' }}>
+            {getVirtualizedTableRows().map(({ log, top, height }) => {
+              return <ExpandableRow log={log} top={top} height={height} />
+            })}
+          </div>
         </div>
       </div>
     )

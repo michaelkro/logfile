@@ -31,12 +31,16 @@ export function Logfile() {
 
   useEffect(() => {
     if (logLines && logLines.length > 0) {
-      const parsedLogs: LogEntry[] = logLines.map((logLine) => {
+      const parsedLogs: LogEntry[] = logLines.map((logLine, index) => {
         try {
           const json: LogData = JSON.parse(logLine)
-          return { timestamp: new Date(json._time).toISOString(), raw: logLine }
+          return {
+            id: index,
+            timestamp: new Date(json._time).toISOString(),
+            raw: logLine
+          }
         } catch {
-          return { raw: logLine, error: 'Invalid JSON' }
+          return { id: index, raw: logLine, error: 'Invalid JSON' }
         }
       })
 
