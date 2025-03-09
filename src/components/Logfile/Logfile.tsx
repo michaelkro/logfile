@@ -6,7 +6,7 @@ import { VirtualizedTable } from '../VirtualizedTable/VirtualizedTable.tsx'
 
 import { type LogEntry } from '../../types.ts'
 
-import LogfileIcon from '../../../public/logfile.svg'
+import LogfileIcon from '../../assets/logfile.svg'
 
 import './Logfile.css'
 
