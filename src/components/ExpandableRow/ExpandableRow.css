@@ -1,5 +1,6 @@
 .logfile-table__row {
   position: absolute;
+  width: 100%;
   display: flex;
   border-bottom: 1px solid #ddd;
   font-family: monospace;
@@ -17,6 +18,11 @@
 
 .logfile-table__row__time-cell {
   min-width: 225px;
+}
+
+.logfile-table__row__event-cell {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .logfile-table__row__time-cell.expanded {

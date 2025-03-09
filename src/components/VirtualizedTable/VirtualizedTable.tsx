@@ -5,7 +5,11 @@ import { LogEntry } from '../../types'
 import { ExpandableRow } from '../ExpandableRow/ExpandableRow'
 
 import './VirtualizedTable.css'
-import { COLLAPSED_ROW_HEIGHT, OVERSCAN_HEIGHT } from './constants'
+import {
+  COLLAPSED_ROW_HEIGHT,
+  OVERSCAN_HEIGHT,
+  TABLE_MAX_WIDTH
+} from './constants'
 
 interface VirtualizedLogTableRow {
   log: LogEntry
@@ -89,7 +93,13 @@ export const VirtualizedTable: FC<VirtualizedTableProps> = ({ logs }) => {
           onScroll={(e) => setScrollTop(e.currentTarget.scrollTop)}
           ref={tableBodyRef}
         >
-          <div style={{ height: getTotalHeight(), position: 'relative' }}>
+          <div
+            style={{
+              height: getTotalHeight(),
+              position: 'relative',
+              width: `${TABLE_MAX_WIDTH}px`
+            }}
+          >
             {getVirtualizedTableRows().map(({ log, top, height }) => {
               return <ExpandableRow log={log} top={top} height={height} />
             })}
