@@ -16,7 +16,9 @@ interface LogData {
 }
 
 export function Logfile() {
-  const [url, setUrl] = useState<string>('')
+  const [url, setUrl] = useState<string>(
+    'https://s3.amazonaws.com/io.cribl.c021.takehome/cribl.log'
+  )
   const [logs, setLogs] = useState<LogEntry[]>([])
   const { streamLogfile, logLines, error, loading, clearError } =
     useStreamLogFile()

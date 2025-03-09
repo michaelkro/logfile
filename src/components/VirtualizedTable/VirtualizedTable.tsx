@@ -17,6 +17,10 @@ interface VirtualizedLogTableRow {
   height: number
 }
 
+interface ExpandedRowsMap {
+  [key: number]: boolean
+}
+
 interface VirtualizedTableProps {
   logs: LogEntry[]
 }
@@ -24,6 +28,7 @@ interface VirtualizedTableProps {
 export const VirtualizedTable: FC<VirtualizedTableProps> = ({ logs }) => {
   const [scrollTop, setScrollTop] = useState(0)
   const [tableBodyHeight, setTableBodyHeight] = useState(0)
+  const [expandedRows, setExpandedRows] = useState<ExpandedRowsMap>({})
   const tableBodyRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -47,6 +52,15 @@ export const VirtualizedTable: FC<VirtualizedTableProps> = ({ logs }) => {
       }
     }
   }, [logs])
+
+  const toggleExpand = useCallback((id: number) => {
+    setExpandedRows((prevState) => {
+      return {
+        ...prevState,
+        [id]: !prevState[id]
+      }
+    })
+  }, [])
 
   const getRowHeight = useCallback((): number => {
     return COLLAPSED_ROW_HEIGHT
@@ -101,7 +115,15 @@ export const VirtualizedTable: FC<VirtualizedTableProps> = ({ logs }) => {
             }}
           >
             {getVirtualizedTableRows().map(({ log, top, height }) => {
-              return <ExpandableRow log={log} top={top} height={height} />
+              return (
+                <ExpandableRow
+                  log={log}
+                  top={top}
+                  height={height}
+                  expanded={expandedRows[log.id]}
+                  toggleExpand={toggleExpand}
+                />
+              )
             })}
           </div>
         </div>
