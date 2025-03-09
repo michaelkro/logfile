@@ -54,7 +54,7 @@ export const VirtualizedTable: FC<VirtualizedTableProps> = ({ logs }) => {
 
   const getTotalHeight = useCallback((): number => {
     return COLLAPSED_ROW_HEIGHT * logs.length
-  })
+  }, [logs])
 
   const getVirtualizedTableRows = useCallback((): VirtualizedLogTableRow[] => {
     const virtualizedTableRows: VirtualizedLogTableRow[] = []
