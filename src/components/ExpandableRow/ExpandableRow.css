@@ -1,4 +1,5 @@
 .logfile-table__row {
+  position: absolute;
   display: flex;
   border-bottom: 1px solid #ddd;
   font-family: monospace;

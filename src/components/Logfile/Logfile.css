@@ -100,4 +100,5 @@ main {
   white-space: nowrap;
   border-bottom-right-radius: var(--border-radius);
   border-bottom-left-radius: var(--border-radius);
+  position: relative;
 }

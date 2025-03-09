@@ -7,9 +7,15 @@ import './ExpandableRow.css'
 interface ExpandableRowProps {
   index: number
   log: LogEntry
+  top: number
+  height: number
 }
 
-export const ExpandableRow: React.FC<ExpandableRowProps> = ({ index, log }) => {
+export const ExpandableRow: React.FC<ExpandableRowProps> = ({
+  log,
+  height,
+  top
+}) => {
   const [expanded, setExpanded] = useState(false)
 
   return (
@@ -17,8 +23,9 @@ export const ExpandableRow: React.FC<ExpandableRowProps> = ({ index, log }) => {
       className={
         expanded ? 'logfile-table__row expanded' : 'logfile-table__row'
       }
-      key={index}
+      key={log.id}
       onClick={() => setExpanded(!expanded)}
+      style={{ height, transform: `translateY(${top}px)` }}
     >
       {expanded ? (
         <>
