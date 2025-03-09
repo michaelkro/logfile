@@ -1,0 +1,31 @@
+.logfile-table {
+  /* header - input - input margin - table header - root padding */
+  height: calc(100vh - 90px - 55px - 55px - 40px - 30px);
+}
+
+.logfile-table__header {
+  display: flex;
+  background-color: #f0f0f0;
+  font-weight: bold;
+  border-top-left-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius);
+}
+
+.logfile-table__header > div {
+  padding: var(--spacing-xs) var(--spacing-sm)
+}
+
+.logfile-table__header__time-cell {
+  width: 225px;
+}
+
+.logfile-table__body {
+  overflow-y: scroll;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #ddd;
+  white-space: nowrap;
+  border-bottom-right-radius: var(--border-radius);
+  border-bottom-left-radius: var(--border-radius);
+}
