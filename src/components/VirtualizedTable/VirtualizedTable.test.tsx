@@ -1,0 +1,5 @@
+test.todo('tracks the height of the table body')
+test.todo('getRowHeight gets the correct height')
+test.todo('getTotalHeight correctly calculates total height of all rows')
+test.todo('only renders a subset of the rows')
+test.todo('renders the correct rows when scrolling')

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 
 import { useStreamLogFile } from '../../hooks/use-stream-log-file.tsx'
 import { LoadingSpinner } from '../LoadingSpinner/LoadingSpinner.tsx'
-import { ExpandableRow } from '../ExpandableRow/ExpandableRow.tsx'
+import { VirtualizedTable } from '../VirtualizedTable/VirtualizedTable.tsx'
 
 import { type LogEntry } from '../../types.ts'
 
@@ -29,12 +29,16 @@ export function Logfile() {
 
   useEffect(() => {
     if (logLines && logLines.length > 0) {
-      const parsedLogs: LogEntry[] = logLines.map((logLine) => {
+      const parsedLogs: LogEntry[] = logLines.map((logLine, index) => {
         try {
           const json: LogData = JSON.parse(logLine)
-          return { timestamp: new Date(json._time).toISOString(), raw: logLine }
+          return {
+            id: index,
+            timestamp: new Date(json._time).toISOString(),
+            raw: logLine
+          }
         } catch {
-          return { raw: logLine, error: 'Invalid JSON' }
+          return { id: index, raw: logLine, error: 'Invalid JSON' }
         }
       })
 
@@ -74,19 +78,7 @@ export function Logfile() {
             <span className="logfile-url-form__input__error">{error}</span>
           )}
         </form>
-        {logs.length > 0 && (
-          <div className="logfile-table">
-            <div className="logfile-table__header">
-              <div className="logfile-table__header__time-cell">Time</div>
-              <div className="logfile-table__header__event-cell">Event</div>
-            </div>
-            <div className="logfile-table__body">
-              {logs.map((log, index) => {
-                return <ExpandableRow log={log} index={index} />
-              })}
-            </div>
-          </div>
-        )}
+        <VirtualizedTable logs={logs} />
       </main>
     </>
   )
