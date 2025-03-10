@@ -139,7 +139,7 @@ export const VirtualizedTable: FC<VirtualizedTableProps> = ({
 
   return (
     logs.length > 0 && (
-      <div className="logfile-table">
+      <div className="logfile-table" role="table">
         <div className="logfile-table__header">
           <div className="logfile-table__header__time-cell">Time</div>
           <div className="logfile-table__header__event-cell">Event</div>

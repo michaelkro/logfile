@@ -1,0 +1,90 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`clicking a row shows expanded view with formatted JSON 1`] = `
+<div
+  class="logfile-table__row expanded"
+  role="row"
+  style="transform: translateY(0px); height: 80px;"
+>
+  <div>
+    <div
+      class="logfile-table__row__time-cell expanded"
+    >
+      2023-04-01T12:00:00.000Z
+    </div>
+    <pre
+      class="logfile-table__row__formatted-json"
+    >
+      {
+  "_time": "2023-04-01T12:00:00Z",
+  "level": "info",
+  "message": "Log message 1"
+}
+    </pre>
+  </div>
+</div>
+`;
+
+exports[`renders logs that are returned 1`] = `
+<div
+  class="logfile-table"
+  role="table"
+>
+  <div
+    class="logfile-table__header"
+  >
+    <div
+      class="logfile-table__header__time-cell"
+    >
+      Time
+    </div>
+    <div
+      class="logfile-table__header__event-cell"
+    >
+      Event
+    </div>
+  </div>
+  <div
+    class="logfile-table__body"
+  >
+    <div
+      style="height: 80px; position: relative; width: 5000px;"
+    >
+      <div
+        class="logfile-table__row"
+        role="row"
+        style="transform: translateY(0px); height: 40px;"
+      >
+         
+        <div
+          class="logfile-table__row__time-cell"
+        >
+          2023-04-01T12:00:00.000Z
+        </div>
+        <div
+          class="logfile-table__row__event-cell"
+        >
+          {"_time": "2023-04-01T12:00:00Z", "level": "info", "message": "Log message 1"}
+        </div>
+      </div>
+      <div
+        class="logfile-table__row"
+        role="row"
+        style="transform: translateY(40px); height: 40px;"
+      >
+         
+        <div
+          class="logfile-table__row__time-cell"
+        >
+          2023-04-01T12:01:00.000Z
+        </div>
+        <div
+          class="logfile-table__row__event-cell"
+        >
+          {"_time": "2023-04-01T12:01:00Z", "level": "error", "message": "Log message 2"}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

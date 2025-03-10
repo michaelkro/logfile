@@ -21,6 +21,7 @@ export const ExpandableRow: React.FC<ExpandableRowProps> = ({
 }) => {
   return (
     <div
+      role="row"
       className={
         expanded ? 'logfile-table__row expanded' : 'logfile-table__row'
       }
