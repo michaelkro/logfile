@@ -8,23 +8,24 @@
 </svg>
 
 # logfile
-A convenient and performant tool for viewing your NDJSON (new line delimited JSON) log files!
+A convenient and performant tool for viewing your NDJSON log files!
 
 ## Getting started
 1. Install dependencies and start development sever
-```bash
-npm i
-npm run dev
-```
+   ```bash
+   npm i
+   npm run dev
+   ```
 2. Visit [http://localhost:5173/](http://localhost:5173/) and enter a web URL to your log file.
-```
-https://log-server.com/your-logs.log
-```
+   ```
+   https://log-server.com/your-logs.log
+   ```
+   If you are on CodeSandbox, you'll want to open the preview for port `5173`. The URL will look something like `https://xxxxxxx-5173.csb.app`
 3. Click on an individual row to see an expanded view.
 
-## Log file format: `NDJSON` (new line delimited JSON)
+## Log file format: `NDJSON`
 
-The parser for `logfile` expects that your log file will adhere to the following conventions:
+`NDJSON` is an acroymn for 'new line delimited JSON'. `logfile`'s parser expects that your log file will adhere to the following conventions:
 1. Each JSON text must end with a newline character `\n`. The newline character may be preceded by a carriage return `\r`
 2. Each JSON text must have a `_time` property containing a unix timestamp
 
@@ -35,12 +36,18 @@ The parser for `logfile` expects that your log file will adhere to the following
 {"_time":1724323576596,"cid":"api","channel":"ShutdownMgr","level":"info","message":"Shutdown:CB:Complete","name":"ServiceRpcMgr.master"}
 ```
 
-## Configuration
-There are a couple knobs you can use to suit your needs.
-
-1. You can change the max download size. The default is 20MB. https://github.com/michaelkro/logfile/blob/c6e6f8d419ebb92ac8d1e1680ab457ee30964b03/src/hooks/use-stream-log-file.tsx/constants.ts#L6
-
+## Configuration options
+[useStreamLogFile](./src/hooks/use-stream-log-file.tsx/use-stream-log-file.tsx)
+  ```ts
+  interface UseStreamLogFileOptions {
+    maxFileSize?: number
+  }
+  ```
+  The default value is [20MB](./src/hooks/use-stream-log-file.tsx/constants.ts). Note that if the download stream exceeds `maxFileSize`, the application will simply stop loading rows into memory at that point. Rows already rendered to the screen will remain. 
 ## Notes
-This application is able to render large data sets in a performant manner by using **virtualized rendering**.
+This application is able to render large data sets in a performant manner by using **virtualized rendering**. A couple notes on the implementation
+* We take the visible height of the table body and add some buffer to the top and bottom for smooth scrolling.
+* As the user scrolls, we examine each row's size and position to determine whether or not it should be rendered. If it coincides with the visible (plus buffer) area, it is rendered. Otherwise it is left out.
+* The total theoretical height is tracked to ensure that the scrollbar works normally.
 
 ![scroll](https://github.com/user-attachments/assets/a2e01cc0-8dce-4dd7-bfc3-195767f3c583)
