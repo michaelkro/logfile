@@ -5,7 +5,7 @@
 
 .logfile-table__header {
   display: flex;
-  background-color: #e0e0e0;
+  background-color: #f0f0f0;
   font-weight: bold;
   border-top-left-radius: var(--border-radius);
   border-top-right-radius: var(--border-radius);
