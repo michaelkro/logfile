@@ -8,13 +8,8 @@
   will-change: transform;
 }
 
-.logfile-table__row:nth-child(even) {
-  background-color: #f7f7f7;
-}
-
 .logfile-table__row.expanded {
   flex-direction: column;
-  background-color: unset;
 }
 
 .logfile-table__row__time-cell, .logfile-table__row__event-cell {
